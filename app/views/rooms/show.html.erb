@@ -1,0 +1,145 @@
+<h1>
+  <%= @room.name %>
+</h1>
+
+<div class="row">
+  <div class="col-12 col-md-3">
+    <%= render partial: 'rooms' %>
+  </div>
+
+  <div class="col">
+    <div class="chat" data-channel-subscribe="room" data-room-id="<%= @room.id %>">
+      <% @room_messages.each do |room_message| %>
+        <div class="chat-message-container" id="<%= room_message.id %>">
+
+          <div class="text-left">
+            <%=room_message.user.username %>
+          </div>
+
+          <div class="row no-gutters">
+            <div class="col-auto text-center">
+              <img src="<%= room_message.user.gravatar_url %>" class="avatar" alt="">
+            </div>
+
+            <div class="col">
+              <div class="message-content">
+
+                <p class="mb-1">
+                  <%= room_message.message %>
+                </p>
+
+                <% if room_message.image.attached? %>
+                  <div class="image">
+                    <%= image_tag(room_message.image, style:'width: 100%')%>
+                  </div>
+                <% end %>
+
+                <div class="text-right">
+                  <small>
+                    <%= room_message.created_at %>
+                  </small>
+                </div>
+
+                <% if current_user == room_message.user %>
+                  <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                      <%= simple_form_for room_message, method: :put do |f| %>
+                        <%= f.input :message, as: :string %>
+                        <%= f.button :button, class: 'btn btn-primary' do %>
+                          Edit
+                        <% end %>
+                        <%= f.input :room_id, as: :hidden %>
+                      <% end %>
+
+                      <%= simple_form_for room_message , method: :delete, remote: true do |f| %>
+                        <%= f.button :button, class: 'btn btn-danger' do %>
+                          Delete
+                        <% end %>
+                        <%= f.input :room_id, as: :hidden %>
+                      <% end %>
+                    </div>
+                  </div>
+                <% end %>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <%= simple_form_for @room_message, remote: true do |form| %>
+      <div class="input-group mb-3">
+        <%= form.input :message, as: :string,
+                                 wrapper: false,
+                                 autofocus: true,
+                                 label: false,
+                                 input_html: {
+                                   class: 'chat-input',
+                                   autocomplete: 'off'
+                                 } %>
+        <%= form.drag_and_drop_file_field :image %>
+        <div class="input-group-append">
+          <%= form.submit "Send", class: 'btn btn-primary chat-input' %>
+        </div>
+      </div>
+
+
+      <%= form.input :room_id, as: :hidden %>
+    <% end %>
+  </div>
+</div>
+
+<div class="d-none" data-role="message-template">
+  <div class="chat-message-container">
+
+    <div class="text-left">
+      <div data-role="username">
+      </div>
+    </div>
+
+    <div class="row no-gutters">
+      <div class="col-auto text-center">
+        <img src="" class="avatar" alt="" data-role="user-avatar">
+      </div>
+
+      <div class="col">
+
+        <div class="message-content">
+
+<!--          <div class="dropdown text-right">-->
+<!--            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+
+<!--            </a>-->
+
+<!--            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">-->
+              <%#= simple_form_for room_message , method: :delete do |f| %>
+                <%#= f.button :button do %>
+<!--                  Delete-->
+                <%# end %>
+                <%#= f.input :room_id, as: :hidden %>
+              <%# end %>
+<!--            </div>-->
+<!--          </div>-->
+
+          <p class="mb-1" data-role="message-text">
+
+          </p>
+
+          <div class="image">
+            <img src="" style="width: 100%" alt="" data-role="image">
+          </div>
+
+          <div class="text-right">
+            <small data-role="message-date"></small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

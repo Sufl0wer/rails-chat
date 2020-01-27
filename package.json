@@ -1,0 +1,8 @@
+{
+  "name": "rails-chat-tutorial",
+  "private": true,
+  "dependencies": {
+    "ion-sound": "^3.0.7",
+    "stimulus": "^1.1.1"
+  }
+}
