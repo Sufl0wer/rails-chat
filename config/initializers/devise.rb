@@ -297,6 +297,6 @@ Devise.setup do |config|
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
   #
-  config.omniauth :facebook, ENV['FACEBOOK_KEY'], ENV['FACEBOOK_SECRET'], callback_url: "http://localhost:3000/users/auth/facebook/callback"
-  config.omniauth :vkontakte, ENV['VK_KEY'], ENV['VK_SECRET'], callback_url: "http://localhost:3000/users/auth/vkontakte/callback"
+  config.omniauth :facebook, ENV['FACEBOOK_KEY'], ENV['FACEBOOK_SECRET'], callback_url: "/users/auth/facebook/callback"
+  config.omniauth :vkontakte, ENV['VK_KEY'], ENV['VK_SECRET'], callback_url: "/users/auth/vkontakte/callback"
 end
