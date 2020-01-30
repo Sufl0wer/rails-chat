@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: [:facebook, :vkontakte]
+         :omniauthable, omniauth_providers: [:vkontakte]
 
   validates :username, uniqueness: true, presence: true
 
